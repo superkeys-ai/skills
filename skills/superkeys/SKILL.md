@@ -7,7 +7,7 @@ description: 一个 Key 调全网数据和所有主流模型。需要实时的�
 
 一个 Key（环境变量 `SUPERKEYS_API_KEY`）调所有能力。接口地址 `https://api.superkeys.ai`，可用 `SUPERKEYS_BASE_URL` 覆盖。Key 在 https://superkeys.ai/console/keys 创建。
 
-能力有上千个，**不要猜 id，先搜再调**。能力会持续增加，搜索结果永远是最新的，不需要更新这个 skill。
+能力有几百个，**不要猜 id，先搜再调**。能力会持续增加，搜索结果永远是最新的，不需要更新这个 skill。
 
 ## 数据：先 search，再 execute
 
@@ -31,7 +31,7 @@ scripts/sk.sh exec douyin.hot_search '{}'
 scripts/sk.sh exec wechat_mp.article_detail '{"url":"https://mp.weixin.qq.com/s/..."}'
 ```
 
-参数名以搜索结果里的 `params` 为准，上面只是示例。返回 `{ id, items, count, cursor, billing, request_id }`。`items` 是抽好的列表，`cursor` 用来翻页：原样放进下一次的翻页参数（一般是 `cursor`，按页码翻的能力是 `page`），没有下一页时为 null。参数名写错时返回里有 `warnings`。
+参数名以搜索结果里的 `params` 为准，上面只是示例。返回 `{ id, items, count, cursor, billing, request_id }`。`items` 是抽好的列表，`cursor` 用来翻页：原样放进下一次的翻页参数（一般是 `cursor`，按页码翻的能力是 `page`），没有下一页时为 null。能力没声明的参数不会生效，会列在返回的 `ignored_params` 里（参数名写错时看这里和 `warnings`）。`limit` 只截断返回的条数，按次计费不变。
 
 没有脚本时直接用 HTTP：
 
@@ -91,4 +91,4 @@ scripts/sk.sh task-get task_xxx         # 状态是 succeeded 时取 output.file
 
 Claude Code：`claude mcp add --transport http superkeys https://api.superkeys.ai/mcp --header "Authorization: Bearer sk-你的Key"`
 
-安装这个 skill：`npx skills add superkeys-ai/skills`。完整文档：https://superkeys.ai/docs（English: https://superkeys.ai/en/docs）。
+安装这个 skill（需要先装 Node.js 18 以上）：`npx skills add superkeys-ai/skills`。完整文档：https://superkeys.ai/docs（English: https://superkeys.ai/en/docs）。
